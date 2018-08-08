@@ -73,7 +73,6 @@ abstract class Card(xCord: Int, yCord: Int, atlas: TextureAtlas): Sprite() {
     }
 
     private fun updateBounds() {
-        Gdx.app.log("D", "updating bounds to x + y $x $y $needToSwap")
         this.setBounds(x, y  , Config.CARD_WIDTH, Config.CARD_HEIGHT)
     }
 

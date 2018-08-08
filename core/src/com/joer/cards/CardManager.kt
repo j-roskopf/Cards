@@ -87,16 +87,9 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
         val playerX = playerPosition % gridWidth
         val playerY = playerPosition / gridWidth
 
-        logger.log("D","selected psn = $firstSelectedPosition and player psn = $playerPosition")
+        val distance = Math.sqrt(((playerX-selectedX)*(playerX-selectedX) + (playerY-selectedY)*(playerY-selectedY)).toDouble())
 
-        logger.log("D","selectedPsn and player $selectedX $selectedY $playerX $playerY")
-
-        val canMoveX = Math.abs(selectedX - playerX) < 1
-        val canMoveY = Math.abs(selectedY - playerY) < 1
-
-        logger.log("D","canMoveX and canMoveY $canMoveX $canMoveY")
-
-        return canMoveX != canMoveY
+        return distance <= 1
     }
 
     private fun swapCards() {
