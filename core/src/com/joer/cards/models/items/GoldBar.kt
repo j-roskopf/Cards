@@ -9,7 +9,9 @@ import javax.inject.Inject
 
 class GoldBar @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas): Item(xCord, yCord, atlas) {
 
-    private val textureRegion: TextureRegion = TextureRegion(atlas.findRegion("rpg_items"),  spriteWidth * 15,  spriteHeight * 6, spriteWidth, spriteHeight)
+    //give player gold to spend in store?
+
+    override var textureRegion: TextureRegion = TextureRegion(atlas.findRegion("rpg_items"),  spriteWidth * 15,  spriteHeight * 6, spriteWidth, spriteHeight)
 
     var worth: Int = ((Math.random() + 1) * 10).toInt()
 

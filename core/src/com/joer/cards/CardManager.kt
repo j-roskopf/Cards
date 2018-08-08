@@ -11,6 +11,7 @@ import com.joer.cards.models.entities.Player
 import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
+import com.joer.cards.models.items.Necklace
 import javax.inject.Inject
 
 class CardManager @Inject constructor(private val atlas: TextureAtlas, private val logger: ApplicationLogger) {
@@ -43,10 +44,10 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
 
         cards[3] = Enemy(0, 1, atlas)
         cards[playerPosition] = Player(1, 1, atlas)
-        cards[5] = Enemy(2, 1, atlas)
+        cards[5] = Necklace(2, 1, atlas)
 
-        cards[6] = Enemy(0, 2, atlas)
-        cards[7] = Enemy(1, 2, atlas)
+        cards[6] = Necklace(0, 2, atlas)
+        cards[7] = Necklace(1, 2, atlas)
         cards[8] = GoldBar(2, 2, atlas)
 
 
@@ -120,6 +121,10 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
             is GoldBar -> {
                 pickupGoldBar(tileClickedOn)
             }
+            is Necklace -> {
+                inventoryManager.items.add(tileClickedOn)
+                swapCards()
+            }
         }
     }
 
@@ -179,7 +184,7 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
     }
 
     fun update(delta: Float) {
-
+        inventoryManager.goldAmount++
     }
 
 }

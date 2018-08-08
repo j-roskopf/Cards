@@ -43,6 +43,11 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
 
         font.draw(batch, inventoryManager.goldAmount.toString(), (Gdx.graphics.width - goldAmountLayout.width - goldMargin), (Gdx.graphics.height - (spriteHeight / 2) + 4).toFloat())
         batch.draw(textureRegion, (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin), (Gdx.graphics.height - 50).toFloat(), spriteWidth.toFloat(), spriteHeight.toFloat())
+
+        inventoryManager.items.forEachIndexed { index, item ->
+            batch.draw(item.textureRegion, (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin) - ((index + 1) * spriteWidth), (Gdx.graphics.height - 50).toFloat(), spriteWidth.toFloat(), spriteHeight.toFloat())
+        }
+
         batch.end()
     }
 
