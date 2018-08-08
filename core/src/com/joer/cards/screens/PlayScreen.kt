@@ -10,9 +10,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.joer.cards.CardGame
 import com.joer.cards.CardManager
+import com.joer.cards.InventoryManager
 import com.joer.cards.config.Config
-import com.joer.cards.models.CardHud
+import com.joer.cards.ui.CardHud
+import com.joer.cards.ui.GameHud
+import com.joer.cards.util.FrameRate
 import javax.inject.Inject
 
 class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
@@ -23,7 +27,14 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
 
     private var viewport: Viewport = FitViewport(Config.GAME_WIDTH, Config.GAME_HEIGHT, camera)
 
+    @Inject lateinit var frameRate: FrameRate
+    @Inject lateinit var gameHud: GameHud
+    @Inject lateinit var i1: InventoryManager
+    @Inject lateinit var i2: InventoryManager
+
     init {
+        CardGame.component.inject(this)
+
         camera.position.set(viewport.worldWidth / 2f, viewport.worldHeight / 2f, 0f)
         camera.update()
 
@@ -42,6 +53,9 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
+        frameRate.render()
+        gameHud.render()
+
         camera.update()
         spriteBatch.projectionMatrix = camera.combined
 
@@ -50,7 +64,7 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
         spriteBatch.begin()
 
         for((_, value) in cardManager.cards) {
-            value?.draw(spriteBatch, delta)
+            value.draw(spriteBatch, delta)
         }
 
         spriteBatch.end()
@@ -60,12 +74,15 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
     }
 
     private fun update(delta: Float) {
+        frameRate.update()
+        gameHud.update()
+
         spriteBatch.projectionMatrix = camera.combined
 
         cardManager.update(delta)
 
         for((_, value) in cardManager.cards) {
-            value?.update(delta)
+            value.update(delta)
         }
     }
 

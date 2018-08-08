@@ -95,6 +95,8 @@ project(":core") {
         implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         implementation "com.google.dagger:dagger:$daggerVersion"
         kapt "com.google.dagger:dagger-compiler:$daggerVersion"
+        implementation "io.github.libktx:ktx-scene2d:1.9.8-b4"
+
     }
 }
 

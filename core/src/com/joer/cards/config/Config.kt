@@ -6,6 +6,6 @@ class Config {
         const val GAME_HEIGHT = 800f
 
         const val CARD_WIDTH = 160f
-        const val CARD_HEIGHT = 266f
+        const val CARD_HEIGHT = 248f
     }
 }
