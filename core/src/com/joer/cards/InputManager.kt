@@ -74,7 +74,7 @@ class InputManager @Inject constructor(private val cardManager: CardManager,
         inventoryManager.items.forEach {
             if (it.boundingRectangle.contains(screenX, screenY) && it.turnsActive == TURNS_ACTIVE.FOREVER.getValue()) {
                 Gdx.app.log("D", "Clicked on item $it")
-                
+
                 val currentlySelected = it.isCurrentlySelected
                 inventoryManager.items.map { item -> item.isCurrentlySelected = false }
                 it.isCurrentlySelected = !currentlySelected

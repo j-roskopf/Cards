@@ -1,11 +1,11 @@
 package com.joer.cards.ui
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.utils.Disposable
 import com.joer.cards.CardGame
 import com.joer.cards.InventoryManager
+import com.joer.cards.config.Config
 import com.joer.cards.models.Item.Companion.spriteHeight
 import com.joer.cards.models.Item.Companion.spriteWidth
 import javax.inject.Inject
@@ -40,8 +40,8 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
 
     fun update() {
         inventoryManager.items.forEachIndexed { index, item ->
-            val itemX = (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin) - ((index + 1) * spriteWidth)
-            val itemY = (Gdx.graphics.height - 50).toFloat()
+            val itemX = (Config.GAME_WIDTH - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin) - ((index + 1) * spriteWidth)
+            val itemY = (Config.GAME_HEIGHT - 50).toFloat()
 
             item.x = itemX
             item.y = itemY
@@ -52,8 +52,8 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
         batch.begin()
         goldAmountLayout.setText(font, inventoryManager.goldAmount.toString())
 
-        font.draw(batch, inventoryManager.goldAmount.toString(), (Gdx.graphics.width - goldAmountLayout.width - goldMargin), (Gdx.graphics.height - (spriteHeight / 2) + 4).toFloat())
-        batch.draw(textureRegion, (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin), (Gdx.graphics.height - 50).toFloat(), spriteWidth.toFloat(), spriteHeight.toFloat())
+        font.draw(batch, inventoryManager.goldAmount.toString(), (Config.GAME_WIDTH - goldAmountLayout.width - goldMargin), (Config.GAME_HEIGHT - (spriteHeight / 2) + 4).toFloat())
+        batch.draw(textureRegion, (Config.GAME_WIDTH - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin), (Config.GAME_HEIGHT - 50).toFloat(), spriteWidth.toFloat(), spriteHeight.toFloat())
 
         inventoryManager.items.forEachIndexed { index, item ->
             item.draw(batch)

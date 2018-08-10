@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.TimeUtils
+import com.joer.cards.config.Config
 import javax.inject.Inject
 
 
@@ -23,7 +24,7 @@ class FrameRate @Inject constructor(): Disposable {
         frameRate = Gdx.graphics.framesPerSecond.toFloat()
         font = BitmapFont()
         batch = SpriteBatch()
-        cam = OrthographicCamera(Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+        cam = OrthographicCamera(Config.GAME_WIDTH, Config.GAME_HEIGHT)
     }
 
     fun resize(screenWidth: Int, screenHeight: Int) {
@@ -46,7 +47,7 @@ class FrameRate @Inject constructor(): Disposable {
 
     fun render() {
         batch.begin()
-        font.draw(batch, frameRate.toInt().toString() + " fps", 3f, (Gdx.graphics.height - 3).toFloat())
+        font.draw(batch, frameRate.toInt().toString() + " fps", 3f, (Config.CARD_HEIGHT - 3).toFloat())
         batch.end()
     }
 

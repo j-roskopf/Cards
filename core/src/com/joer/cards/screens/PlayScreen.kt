@@ -103,6 +103,7 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
 
     override fun resize(width: Int, height: Int) {
         gameHud.resize(width, height)
+        frameRate.resize(width, height)
         viewport.update(width, height)
         camera.update()
     }
