@@ -37,7 +37,7 @@ public class GameModule {
 
     @Provides
     @Singleton
-    fun providesCardHud() = CardHud()
+    fun providesCardHud(cardManager: CardManager) = CardHud(cardManager)
 
     @Provides
     @Singleton

@@ -1,35 +1,42 @@
 
 pack.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
 adventurer
   rotate: false
-  xy: 772, 370
+  xy: 1004, 1172
   size: 385, 592
   orig: 385, 592
   offset: 0, 0
   index: -1
 adventurer_bow
   rotate: false
-  xy: 2, 44
+  xy: 1004, 1022
   size: 200, 148
   orig: 200, 148
   offset: 0, 0
   index: -1
 adventurer_hand
   rotate: false
-  xy: 1159, 592
+  xy: 1391, 1394
   size: 385, 370
   orig: 385, 370
   offset: 0, 0
   index: -1
 enemies
   rotate: false
-  xy: 1546, 2
+  xy: 772, 2
   size: 128, 960
   orig: 128, 960
+  offset: 0, 0
+  index: -1
+round_explosion
+  rotate: false
+  xy: 2, 964
+  size: 1000, 800
+  orig: 1000, 800
   offset: 0, 0
   index: -1
 rpg_items
@@ -41,14 +48,14 @@ rpg_items
   index: -1
 shields
   rotate: false
-  xy: 1676, 482
+  xy: 902, 482
   size: 48, 480
   orig: 48, 480
   offset: 0, 0
   index: -1
 swords
   rotate: false
-  xy: 1726, 482
+  xy: 952, 482
   size: 48, 480
   orig: 48, 480
   offset: 0, 0

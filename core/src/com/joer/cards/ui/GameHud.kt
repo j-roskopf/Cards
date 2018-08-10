@@ -13,12 +13,17 @@ import javax.inject.Inject
 class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: TextureAtlas): Disposable {
 
     @Inject lateinit var inventoryManager: InventoryManager
+    @Inject lateinit var inventoryHud: InventoryHud
 
     private val font: BitmapFont = BitmapFont()
     private var cam: OrthographicCamera? = null
     private var textureRegion: TextureRegion
-    private var goldAmountLayout = GlyphLayout()
-    private var goldMargin = 16
+
+
+    companion object {
+        internal var goldMargin = 16
+        internal var goldAmountLayout = GlyphLayout()
+    }
 
     init {
         CardGame.component.inject(this)
@@ -34,10 +39,16 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
     }
 
     fun update() {
+        inventoryManager.items.forEachIndexed { index, item ->
+            val itemX = (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin) - ((index + 1) * spriteWidth)
+            val itemY = (Gdx.graphics.height - 50).toFloat()
 
+            item.x = itemX
+            item.y = itemY
+        }
     }
 
-    fun render() {
+    fun render(delta: Float) {
         batch.begin()
         goldAmountLayout.setText(font, inventoryManager.goldAmount.toString())
 
@@ -45,7 +56,13 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
         batch.draw(textureRegion, (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin), (Gdx.graphics.height - 50).toFloat(), spriteWidth.toFloat(), spriteHeight.toFloat())
 
         inventoryManager.items.forEachIndexed { index, item ->
-            batch.draw(item.textureRegion, (Gdx.graphics.width - spriteWidth.toFloat() - goldAmountLayout.width - goldMargin) - ((index + 1) * spriteWidth), (Gdx.graphics.height - 50).toFloat(), spriteWidth.toFloat(), spriteHeight.toFloat())
+            item.draw(batch)
+
+            if(item.turnsActive > 0) {
+                font.draw(batch, item.turnsActive.toString(), item.x, item.y)
+            } else {
+                font.draw(batch, item.damage.toString(), item.x, item.y)
+            }
         }
 
         batch.end()

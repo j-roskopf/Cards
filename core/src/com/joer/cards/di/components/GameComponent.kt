@@ -2,6 +2,8 @@ package com.joer.cards.di.components
 
 import com.joer.cards.CardGame
 import com.joer.cards.CardManager
+import com.joer.cards.CollisionManager
+import com.joer.cards.animations.Explosion
 import com.joer.cards.di.modules.GameModule
 import com.joer.cards.screens.PlayScreen
 import com.joer.cards.ui.GameHud
@@ -12,7 +14,9 @@ import javax.inject.Singleton
 @Component(modules = [(GameModule::class)])
 interface GameComponent {
     fun inject(cardGame: CardGame)
+    fun inject(explosion: Explosion)
     fun inject(playScreen: PlayScreen)
     fun inject(manager: CardManager)
+    fun inject(collisionManager: CollisionManager)
     fun inject(hud: GameHud)
 }
