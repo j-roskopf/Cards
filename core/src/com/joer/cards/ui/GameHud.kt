@@ -8,6 +8,8 @@ import com.joer.cards.InventoryManager
 import com.joer.cards.config.Config
 import com.joer.cards.models.Item.Companion.spriteHeight
 import com.joer.cards.models.Item.Companion.spriteWidth
+import com.joer.cards.models.items.Potion
+import com.joer.cards.models.items.SpellBook
 import javax.inject.Inject
 
 class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: TextureAtlas): Disposable {
@@ -61,7 +63,14 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
             if(item.turnsActive > 0) {
                 font.draw(batch, item.turnsActive.toString(), item.x, item.y)
             } else {
-                font.draw(batch, item.damage.toString(), item.x, item.y)
+               when(item) {
+                   is SpellBook -> {
+                       font.draw(batch, item.damage.toString(), item.x, item.y)
+                   }
+                   is Potion -> {
+                       font.draw(batch, item.health.toString(), item.x, item.y)
+                   }
+               }
             }
         }
 

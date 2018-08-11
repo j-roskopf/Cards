@@ -10,12 +10,14 @@ import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
+import com.joer.cards.models.items.Potion
 import com.joer.cards.models.items.SpellBook
 import javax.inject.Inject
 
 class CardManager @Inject constructor(private val atlas: TextureAtlas, private val logger: ApplicationLogger) {
 
     @Inject lateinit var inventoryManager: InventoryManager
+    @Inject lateinit var player: Player
 
     internal var cards: HashMap<Int, Card> = HashMap()
     internal var firstSelectedPosition = -1
@@ -44,10 +46,10 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
         cards[2] = Shield(2, 0, atlas)
 
         cards[3] = Enemy(0, 1, atlas)
-        cards[playerPosition] = Player(1, 1, atlas)
+        cards[playerPosition] = player
         cards[5] = Necklace(2, 1, atlas)
 
-        cards[6] = Necklace(0, 2, atlas)
+        cards[6] = Potion(0, 2, atlas)
         cards[7] = Necklace(1, 2, atlas)
         cards[8] = SpellBook(2, 2, atlas)
     }
@@ -78,7 +80,6 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
             playerPosition = firstSelectedPosition
             addCardAtPosition(oldPlayerPosition)
         }
-
 
         inventoryManager.handleTurnsActive()
     }

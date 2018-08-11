@@ -27,6 +27,15 @@ class InventoryManager @Inject constructor() {
         }
     }
 
+    fun update() {
+        val iterator = items.iterator()
+        while(iterator.hasNext()) {
+            if(iterator.next().markedForRemoval) {
+                iterator.remove()
+            }
+        }
+    }
+
     fun necklaceActive(): Boolean {
         return items.any { item -> item is Necklace }
     }

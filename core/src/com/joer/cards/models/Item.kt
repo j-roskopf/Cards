@@ -20,6 +20,8 @@ abstract class Item(xCord: Int, yCord: Int, atlas: TextureAtlas): Card(xCord, yC
 
     internal open var turnsActive = 0
 
+    internal open var markedForRemoval = false
+
     internal open var damage = ((Math.random() + 1) * 4).toInt()
 
     abstract var textureRegion: TextureRegion

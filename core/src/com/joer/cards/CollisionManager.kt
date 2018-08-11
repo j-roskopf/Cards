@@ -1,11 +1,13 @@
 package com.joer.cards
 
+import com.joer.cards.models.Item
 import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
 import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
+import com.joer.cards.models.items.Potion
 import com.joer.cards.models.items.SpellBook
 import javax.inject.Inject
 
@@ -27,20 +29,22 @@ class CollisionManager @Inject constructor(private val inventoryManager: Invento
             is GoldBar -> {
                 pickupGoldBar(tileClickedOn)
             }
+            is Potion -> {
+                pickupItem(tileClickedOn)
+            }
             is Necklace -> {
-                //make sure swap cards is called before adding the item because we take care of
-                //turnsActive for each item in swap cards
-                cardManager.swapCards()
-                tileClickedOn.setInInventory()
-                inventoryManager.items.add(tileClickedOn)
+                pickupItem(tileClickedOn)
             }
             is SpellBook -> {
-                cardManager.swapCards()
-                tileClickedOn.setInInventory()
-                inventoryManager.items.add(tileClickedOn)
+                pickupItem(tileClickedOn)
             }
-
         }
+    }
+
+    private fun pickupItem(tileClickedOn: Item) {
+        cardManager.swapCards()
+        tileClickedOn.setInInventory()
+        inventoryManager.items.add(tileClickedOn)
     }
 
     private fun pickupGoldBar(tileClickedOn: GoldBar) {

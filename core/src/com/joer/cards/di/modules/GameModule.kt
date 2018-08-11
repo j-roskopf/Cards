@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.joer.cards.CardManager
 import com.joer.cards.InventoryManager
+import com.joer.cards.models.entities.Player
 import com.joer.cards.screens.PlayScreen
 import com.joer.cards.ui.CardHud
 import com.joer.cards.ui.GameHud
@@ -76,5 +77,11 @@ public class GameModule {
     @Singleton
     fun providesGameHud(batch: SpriteBatch, atlas: TextureAtlas): GameHud {
         return GameHud(batch, atlas)
+    }
+
+    @Provides
+    @Singleton
+    fun providesPlayer( atlas: TextureAtlas): Player {
+        return Player(1, 1, atlas)
     }
 }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.joer.cards.CardGame
 import com.joer.cards.CardManager
 import com.joer.cards.InputManager
+import com.joer.cards.InventoryManager
 import com.joer.cards.config.Config
 import com.joer.cards.ui.CardHud
 import com.joer.cards.ui.FXManager
@@ -34,6 +35,7 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
     @Inject lateinit var gameHud: GameHud
     @Inject lateinit var inputManager: InputManager
     @Inject lateinit var inventoryHud: InventoryHud
+    @Inject lateinit var inventoryManager: InventoryManager
     @Inject lateinit var fxManager: FXManager
 
     init {
@@ -83,6 +85,8 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
     private fun update(delta: Float) {
         frameRate.update()
         gameHud.update()
+
+        inventoryManager.update()
 
         spriteBatch.projectionMatrix = camera.combined
 

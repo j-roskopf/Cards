@@ -47,7 +47,7 @@ class FrameRate @Inject constructor(): Disposable {
 
     fun render() {
         batch.begin()
-        font.draw(batch, frameRate.toInt().toString() + " fps", 3f, (Config.CARD_HEIGHT - 3).toFloat())
+        font.draw(batch, frameRate.toInt().toString() + " fps", 3f, (Config.GAME_HEIGHT - 3).toFloat())
         batch.end()
     }
 

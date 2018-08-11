@@ -10,13 +10,18 @@ import com.joer.cards.animations.Explosion
 import com.joer.cards.config.Config
 import com.joer.cards.models.TURNS_ACTIVE
 import com.joer.cards.models.entities.Enemy
+import com.joer.cards.models.entities.Player
+import com.joer.cards.models.items.Potion
 import javax.inject.Inject
 
-class InputManager @Inject constructor(private val cardManager: CardManager,
-                                       private val inventoryManager: InventoryManager,
-                                       private val collisionManager: CollisionManager,
-                                       private val atlas: TextureAtlas,
-                                       private val spriteBatch: SpriteBatch) {
+class InputManager @Inject constructor() {
+
+    @Inject lateinit var player: Player
+    @Inject lateinit var spriteBatch: SpriteBatch
+    @Inject lateinit var atlas: TextureAtlas
+    @Inject lateinit var collisionManager: CollisionManager
+    @Inject lateinit var inventoryManager: InventoryManager
+    @Inject lateinit var cardManager: CardManager
 
     internal fun handleKeyboard(keycode: Int) {
         var playerX = cardManager.playerPosition % GRID_WIDTH
@@ -73,12 +78,14 @@ class InputManager @Inject constructor(private val cardManager: CardManager,
         //check if it hit inventory
         inventoryManager.items.forEach {
             if (it.boundingRectangle.contains(screenX, screenY) && it.turnsActive == TURNS_ACTIVE.FOREVER.getValue()) {
-                Gdx.app.log("D", "Clicked on item $it")
-
                 val currentlySelected = it.isCurrentlySelected
                 inventoryManager.items.map { item -> item.isCurrentlySelected = false }
                 it.isCurrentlySelected = !currentlySelected
-                return
+
+                if(it is Potion) {
+                    player.addAmountToHealth(it.health)
+                    it.markedForRemoval = true
+                }
             }
         }
     }
