@@ -1,4 +1,4 @@
-package com.joer.cards
+package com.joer.cards.managers
 
 import com.joer.cards.animations.Explosion
 import com.joer.cards.models.Item

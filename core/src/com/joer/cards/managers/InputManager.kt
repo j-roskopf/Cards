@@ -1,17 +1,17 @@
-package com.joer.cards
+package com.joer.cards.managers
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Rectangle
-import com.joer.cards.CardManager.Companion.GRID_WIDTH
+import com.joer.cards.managers.CardManager.Companion.GRID_WIDTH
 import com.joer.cards.animations.Explosion
 import com.joer.cards.config.Config
 import com.joer.cards.models.TURNS_ACTIVE
 import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
-import com.joer.cards.models.items.Potion
+import com.joer.cards.models.items.potion.DamagePotion
+import com.joer.cards.models.items.potion.HealthPotion
 import javax.inject.Inject
 
 class InputManager @Inject constructor() {
@@ -75,16 +75,22 @@ class InputManager @Inject constructor() {
             }
         }
 
-        //check if it hit inventory
+        //check if it hit inventoryOld
         inventoryManager.items.forEach {
             if (it.boundingRectangle.contains(screenX, screenY) && it.turnsActive == TURNS_ACTIVE.FOREVER.getValue()) {
                 val currentlySelected = it.isCurrentlySelected
                 inventoryManager.items.map { item -> item.isCurrentlySelected = false }
                 it.isCurrentlySelected = !currentlySelected
 
-                if(it is Potion) {
-                    player.addAmountToHealth(it.health)
-                    it.markedForRemoval = true
+                when(it) {
+                    is HealthPotion -> {
+                        player.addAmountToHealth(it.health)
+                        it.markedForRemoval = true
+                    }
+                    is DamagePotion -> {
+                        player.addAmountToAttack(it.health)
+                        it.markedForRemoval = true
+                    }
                 }
             }
         }

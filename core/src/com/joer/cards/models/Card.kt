@@ -102,13 +102,13 @@ abstract class Card(xCord: Int, yCord: Int, atlas: TextureAtlas): Sprite() {
     }
 
     private fun drawHealth(batch: Batch, worth: Int) {
-        font.draw(batch, worth.toString(), x + Config.CARD_WIDTH - 50, y + Config.CARD_HEIGHT - 56 )
-        batch.draw(shieldTextureRegion, x + Config.CARD_WIDTH - 50, y + Config.CARD_HEIGHT - 50, shieldSpriteWidth, shieldSpriteHeight)
+        font.draw(batch, worth.toString(), x + Config.CARD_WIDTH - 46, y + Config.CARD_HEIGHT - 48 )
+        batch.draw(shieldTextureRegion, x + Config.CARD_WIDTH - 46, y + Config.CARD_HEIGHT - 42, shieldSpriteWidth, shieldSpriteHeight)
     }
 
     private fun drawAttack(batch: Batch) {
-        font.draw(batch, attack.toString(), x + 32, y + Config.CARD_HEIGHT - 56 )
-        batch.draw(swordTextureRegion, x + 32, y + Config.CARD_HEIGHT - 50, swordSpriteWidth, swordSpriteHeight)
+        font.draw(batch, attack.toString(), x + 28, y + Config.CARD_HEIGHT - 48 )
+        batch.draw(swordTextureRegion, x + 28, y + Config.CARD_HEIGHT - 42, swordSpriteWidth, swordSpriteHeight)
     }
 
     fun dispose() {

@@ -1,8 +1,9 @@
-package com.joer.cards
+package com.joer.cards.managers
 
 import com.badlogic.gdx.ApplicationLogger
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
+import com.joer.cards.CardGame
 import com.joer.cards.models.Card
 import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
@@ -10,24 +11,27 @@ import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
-import com.joer.cards.models.items.Potion
+import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.models.items.SpellBook
+import com.joer.cards.models.items.potion.DamagePotion
 import javax.inject.Inject
 
-class CardManager @Inject constructor(private val atlas: TextureAtlas, private val logger: ApplicationLogger) {
+class CardManager @Inject constructor() {
 
     @Inject lateinit var inventoryManager: InventoryManager
     @Inject lateinit var player: Player
+    @Inject lateinit var atlas: TextureAtlas
+    @Inject lateinit var logger: ApplicationLogger
 
     internal var cards: HashMap<Int, Card> = HashMap()
     internal var firstSelectedPosition = -1
 
     companion object {
-        const val GRID_WIDTH = 3
-        const val GRID_HEIGHT = 3
+        const val GRID_WIDTH = 4
+        const val GRID_HEIGHT = 4
     }
 
-    var playerPosition = 4
+    var playerPosition = 5
 
     init {
         CardGame.component.inject(this)
@@ -44,20 +48,29 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
         cards[0] = Sword(0, 0, atlas)
         cards[1] = Enemy(1, 0, atlas)
         cards[2] = Shield(2, 0, atlas)
+        cards[3] = Shield(3, 0, atlas)
 
-        cards[3] = Enemy(0, 1, atlas)
+        cards[4] = Enemy(0, 1, atlas)
         cards[playerPosition] = player
-        cards[5] = Necklace(2, 1, atlas)
+        cards[6] = Necklace(2, 1, atlas)
+        cards[7] = Necklace(3, 1, atlas)
 
-        cards[6] = Potion(0, 2, atlas)
-        cards[7] = Necklace(1, 2, atlas)
-        cards[8] = SpellBook(2, 2, atlas)
+        cards[8] = HealthPotion(0, 2, atlas)
+        cards[9] = Necklace(1, 2, atlas)
+        cards[10] = SpellBook(2, 2, atlas)
+        cards[11] = SpellBook(3, 2, atlas)
+
+        cards[12] = HealthPotion(0, 3, atlas)
+        cards[13] = Necklace(1, 3, atlas)
+        cards[14] = SpellBook(2, 3, atlas)
+        cards[15] = SpellBook(3, 3, atlas)
+
     }
 
     private fun addCardAtPosition(psn: Int) {
         val x = psn % GRID_WIDTH
         val y = psn / GRID_WIDTH
-        val choice = (Math.random() * 6).toInt()
+        val choice = (Math.random() * 8).toInt()
         when(choice) {
             0 -> cards[psn] = Enemy(x, y, atlas)
             1 -> cards[psn] = Sword(x, y, atlas)
@@ -65,6 +78,8 @@ class CardManager @Inject constructor(private val atlas: TextureAtlas, private v
             3 -> cards[psn] = GoldBar(x, y, atlas)
             4 -> cards[psn] = Necklace(x, y, atlas)
             5 -> cards[psn] = SpellBook(x, y, atlas)
+            6 -> cards[psn] = HealthPotion(x, y, atlas)
+            7 -> cards[psn] = DamagePotion(x, y, atlas)
             else -> cards[psn] = Sword(x, y, atlas)
         }
     }

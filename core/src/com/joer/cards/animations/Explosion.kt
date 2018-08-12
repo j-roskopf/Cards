@@ -12,7 +12,6 @@ class Explosion(atlas: TextureAtlas, xCord: Int, yCord: Int): Sprite() {
     internal var stateTimer = 0f
     internal var animation: Animation<TextureRegion>
 
-
     init {
         CardGame.component.inject(this)
 

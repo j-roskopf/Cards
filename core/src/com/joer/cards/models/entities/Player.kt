@@ -51,19 +51,12 @@ class Player(xCord: Int, yCord: Int, atlas: TextureAtlas) : Card(xCord, yCord, a
         frames.clear()
     }
 
-    override fun update(delta: Float) {
-        super.update(delta)
-        //setRegion(getCurrentFrame(delta))
-        //setBounds(x, y, Config.CARD_WIDTH, Config.CARD_HEIGHT / 2)
-    }
-
     override fun draw(batch: Batch, delta: Float) {
         super.draw(batch)
-        batch.draw(getCurrentFrame(delta), x, y + Config.CARD_HEIGHT / 4, Config.CARD_WIDTH, Config.CARD_HEIGHT / 2)
+        batch.draw(getCurrentFrame(delta), x, y + Config.CARD_HEIGHT / 8, Config.CARD_WIDTH, Config.CARD_HEIGHT / 2)
     }
 
     private fun getCurrentFrame(delta: Float): TextureRegion {
-
         val region = when (currentState) {
             PLAYER_STATE.ATTACKING -> firstPlayerAttack.getKeyFrame(stateTimer)
             PLAYER_STATE.IDLE -> playerIdle.getKeyFrame(stateTimer, true)
@@ -106,7 +99,4 @@ class Player(xCord: Int, yCord: Int, atlas: TextureAtlas) : Card(xCord, yCord, a
     fun addAmountToAttack(amount: Int) {
         this.attack += amount
     }
-
-
-
 }

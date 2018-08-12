@@ -1,7 +1,7 @@
 package com.joer.cards.ui
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.joer.cards.InventoryManager
+import com.joer.cards.managers.InventoryManager
 import javax.inject.Inject
 
 class FXManager @Inject constructor(private val inventoryManager: InventoryManager, private val spriteBatch: SpriteBatch) {

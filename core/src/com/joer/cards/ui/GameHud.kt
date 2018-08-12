@@ -4,12 +4,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.utils.Disposable
 import com.joer.cards.CardGame
-import com.joer.cards.InventoryManager
+import com.joer.cards.managers.InventoryManager
 import com.joer.cards.config.Config
 import com.joer.cards.models.Item.Companion.spriteHeight
 import com.joer.cards.models.Item.Companion.spriteWidth
-import com.joer.cards.models.items.Potion
+import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.models.items.SpellBook
+import com.joer.cards.models.items.potion.DamagePotion
 import javax.inject.Inject
 
 class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: TextureAtlas): Disposable {
@@ -67,7 +68,10 @@ class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: Texture
                    is SpellBook -> {
                        font.draw(batch, item.damage.toString(), item.x, item.y)
                    }
-                   is Potion -> {
+                   is HealthPotion -> {
+                       font.draw(batch, item.health.toString(), item.x, item.y)
+                   }
+                   is DamagePotion -> {
                        font.draw(batch, item.health.toString(), item.x, item.y)
                    }
                }

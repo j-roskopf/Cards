@@ -2,11 +2,14 @@ package com.joer.cards.di.modules
 
 import com.badlogic.gdx.ApplicationLogger
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.joer.cards.CardManager
-import com.joer.cards.InventoryManager
+import com.joer.cards.CardGame
+import com.joer.cards.inventory.InventoryOld
+import com.joer.cards.managers.CardManager
+import com.joer.cards.managers.InventoryManager
 import com.joer.cards.models.entities.Player
 import com.joer.cards.screens.PlayScreen
 import com.joer.cards.ui.CardHud
@@ -45,6 +48,7 @@ public class GameModule {
     fun providesMainPlayScreen(spriteBatch: SpriteBatch,
                                camera: OrthographicCamera,
                                cardManager: CardManager,
+                               cardGame: CardGame,
                                logger: ApplicationLogger,
                                cardHud: CardHud): PlayScreen =
             PlayScreen(spriteBatch,
@@ -55,8 +59,8 @@ public class GameModule {
 
     @Provides
     @Singleton
-    fun providesCardManager(textureAtlas: TextureAtlas, logger: ApplicationLogger): CardManager {
-        return CardManager(textureAtlas, logger)
+    fun providesCardManager(): CardManager {
+        return CardManager()
     }
 
     @Provides
@@ -83,5 +87,17 @@ public class GameModule {
     @Singleton
     fun providesPlayer( atlas: TextureAtlas): Player {
         return Player(1, 1, atlas)
+    }
+
+    @Provides
+    @Singleton
+    fun providesAssetManager(): AssetManager {
+        return AssetManager()
+    }
+
+    @Provides
+    @Singleton
+    fun providesCardGame(): CardGame {
+        return CardGame()
     }
 }

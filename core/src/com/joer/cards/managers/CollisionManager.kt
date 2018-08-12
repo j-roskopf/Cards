@@ -1,4 +1,4 @@
-package com.joer.cards
+package com.joer.cards.managers
 
 import com.joer.cards.models.Item
 import com.joer.cards.models.entities.Enemy
@@ -7,11 +7,15 @@ import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
-import com.joer.cards.models.items.Potion
+import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.models.items.SpellBook
+import com.joer.cards.models.items.potion.DamagePotion
 import javax.inject.Inject
 
-class CollisionManager @Inject constructor(private val inventoryManager: InventoryManager, private val cardManager: CardManager) {
+class CollisionManager @Inject constructor() {
+
+    @Inject lateinit var inventoryManager: InventoryManager
+    @Inject lateinit var cardManager: CardManager
 
     internal fun switchBasedOnTile() {
         val tileClickedOn = cardManager.cards[cardManager.firstSelectedPosition]
@@ -29,7 +33,10 @@ class CollisionManager @Inject constructor(private val inventoryManager: Invento
             is GoldBar -> {
                 pickupGoldBar(tileClickedOn)
             }
-            is Potion -> {
+            is HealthPotion -> {
+                pickupItem(tileClickedOn)
+            }
+            is DamagePotion -> {
                 pickupItem(tileClickedOn)
             }
             is Necklace -> {

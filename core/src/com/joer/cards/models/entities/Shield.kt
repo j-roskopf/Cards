@@ -24,7 +24,7 @@ class Shield @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas): C
 
     override fun draw(batch: Batch) {
         super.draw(batch)
-        batch.draw(texture, x + Config.CARD_WIDTH / 2 - spriteWidth, y + Config.CARD_HEIGHT / 2 - spriteHeight * 2, Config.CARD_WIDTH / 4, Config.CARD_HEIGHT / 4)
+        batch.draw(texture, x + Config.CARD_WIDTH / 2 - spriteWidth, y + Config.CARD_HEIGHT / 2 - spriteHeight * 3, Config.CARD_WIDTH / 4, Config.CARD_HEIGHT / 4)
     }
 
 }

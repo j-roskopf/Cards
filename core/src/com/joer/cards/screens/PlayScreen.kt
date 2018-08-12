@@ -1,10 +1,7 @@
 package com.joer.cards.screens
 
-import com.badlogic.gdx.ApplicationLogger
-import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.*
 import com.badlogic.gdx.Input.Keys.*
-import com.badlogic.gdx.InputAdapter
-import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -12,10 +9,12 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.joer.cards.CardGame
-import com.joer.cards.CardManager
-import com.joer.cards.InputManager
-import com.joer.cards.InventoryManager
+import com.joer.cards.managers.CardManager
+import com.joer.cards.managers.InputManager
+import com.joer.cards.managers.InventoryManager
 import com.joer.cards.config.Config
+import com.joer.cards.inventory.InventoryActor
+import com.joer.cards.inventory.InventoryOld
 import com.joer.cards.ui.CardHud
 import com.joer.cards.ui.FXManager
 import com.joer.cards.ui.GameHud
@@ -37,6 +36,12 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
     @Inject lateinit var inventoryHud: InventoryHud
     @Inject lateinit var inventoryManager: InventoryManager
     @Inject lateinit var fxManager: FXManager
+    @Inject lateinit var inventoryOld: InventoryOld
+
+    private var showInventory = false
+    lateinit var game: CardGame
+
+    private var inputMultiplexer = InputMultiplexer()
 
     init {
         CardGame.component.inject(this)
@@ -46,7 +51,10 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
 
         cardManager.createInitialCards()
 
-        Gdx.input.inputProcessor = this
+        inputMultiplexer.addProcessor(this)
+        inputMultiplexer.addProcessor(inventoryOld.stage)
+
+        Gdx.input.inputProcessor = inputMultiplexer
     }
 
     override fun hide() {
@@ -80,6 +88,13 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
         spriteBatch.end()
 
         cardHud.drawBorder()
+
+        if(showInventory) {
+            inventoryOld.render(delta)
+            inventoryOld.inventoryActor!!.isVisible = true
+        } else {
+            //inventoryOld.inventoryActor!!.isVisible = false
+        }
     }
 
     private fun update(delta: Float) {
@@ -109,6 +124,7 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
         gameHud.resize(width, height)
         frameRate.resize(width, height)
         viewport.update(width, height)
+        inventoryOld.stage.viewport.update(width, height)
         camera.update()
     }
 
@@ -128,6 +144,12 @@ class PlayScreen @Inject constructor(private val spriteBatch: SpriteBatch,
             inputManager.handleKeyboard(keycode)
             return true
         }
+
+        if(keycode == I) {
+            showInventory = !showInventory
+        }
+
+
         return super.keyUp(keycode)
     }
 

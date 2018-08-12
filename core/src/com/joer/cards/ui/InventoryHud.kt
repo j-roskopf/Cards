@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.joer.cards.InventoryManager
+import com.joer.cards.managers.InventoryManager
 import javax.inject.Inject
 
 class InventoryHud @Inject constructor(){

@@ -30,15 +30,9 @@ class Enemy @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas): Ca
         enemyIdle = Animation(0.3f, frames)
     }
 
-    override fun update(delta: Float) {
-        super.update(delta)
-        //setRegion(enemyIdle.getKeyFrame(stateTimer, true))
-        //setBounds(x, y, spriteWidth.toFloat(), spriteHeight.toFloat())
-    }
-
     override fun draw(batch: Batch) {
         super.draw(batch)
-        batch.draw(getCurrentFrame(), x + Config.CARD_WIDTH / 4, y + Config.CARD_HEIGHT / 4, Config.CARD_WIDTH / 2, Config.CARD_HEIGHT / 2)
+        batch.draw(getCurrentFrame(), x + Config.CARD_WIDTH / 4, y + Config.CARD_HEIGHT / 8, Config.CARD_WIDTH / 2, Config.CARD_HEIGHT / 2 - spriteHeight / 2)
     }
 
     private fun getCurrentFrame(): TextureRegion {
