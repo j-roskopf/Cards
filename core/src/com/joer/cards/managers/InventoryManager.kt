@@ -14,6 +14,8 @@ class InventoryManager @Inject constructor() {
     internal var items: ArrayList<Item> = ArrayList()
     internal var explosions: ArrayList<Explosion> = ArrayList()
 
+    var selectedItem: Item? = null
+
     fun handleTurnsActive() {
         val iterator = items.iterator()
         while(iterator.hasNext()) {

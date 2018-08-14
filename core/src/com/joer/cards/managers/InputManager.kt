@@ -1,12 +1,12 @@
 package com.joer.cards.managers
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Rectangle
-import com.joer.cards.managers.CardManager.Companion.GRID_WIDTH
 import com.joer.cards.animations.Explosion
 import com.joer.cards.config.Config
+import com.joer.cards.managers.CardManager.Companion.GRID_WIDTH
 import com.joer.cards.models.TURNS_ACTIVE
 import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
@@ -17,7 +17,6 @@ import javax.inject.Inject
 class InputManager @Inject constructor() {
 
     @Inject lateinit var player: Player
-    @Inject lateinit var spriteBatch: SpriteBatch
     @Inject lateinit var atlas: TextureAtlas
     @Inject lateinit var collisionManager: CollisionManager
     @Inject lateinit var inventoryManager: InventoryManager
@@ -123,6 +122,14 @@ class InputManager @Inject constructor() {
             distance <= 2
         } else {
             distance <= 1
+        }
+    }
+
+    fun detectClickedInventory(x: Float, y: Float, pointer: Int, button: Int) {
+        inventoryManager.items.forEach {
+            if(it.inventoryBoundingBox.contains(x, y)) {
+                Gdx.app.log("D","clicked on an $it")
+            }
         }
     }
 }

@@ -72,7 +72,7 @@ class SlotActor(private val slotSkin: Skin, val slot: Slot, stage: Stage) : Imag
 
 }
 
-class StyleCreator() {
+class StyleCreator {
 
     init {
         CardGame.component.inject(this)

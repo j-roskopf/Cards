@@ -5,7 +5,8 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration
 import com.joer.cards.CardGame
 import com.joer.cards.config.Config
 
-object KotlinDesktopLauncher {
+class KotlinDesktopLauncher {
+    companion object {
         @JvmStatic
         fun main(arg: Array<String>) {
             val config = LwjglApplicationConfiguration()
@@ -13,4 +14,6 @@ object KotlinDesktopLauncher {
             config.height = Config.GAME_HEIGHT.toInt()
             LwjglApplication(CardGame(), config)
         }
+    }
+
 }
