@@ -1,5 +1,6 @@
 package com.joer.cards.ui.inventory
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -73,6 +74,8 @@ class Inventory @Inject constructor(spriteBatch: SpriteBatch,
 
         var mod: Int
 
+        Gdx.app.log("D","${inventoryManager.items.size}")
+
         inventoryManager.items.forEachIndexed { index, item ->
             val itemX = index * INVENTORY_ITEM_WIDTH
             val itemY = INVENTORY_ITEM_HEIGHT
@@ -112,20 +115,27 @@ class Inventory @Inject constructor(spriteBatch: SpriteBatch,
 
     private fun handleItem(item: Item): Boolean {
         var handled = false
+        var remove = false
 
         when(item) {
             is HealthPotion -> {
                 player.addAmountToHealth(item.health)
                 handled = true
+                remove = true
             }
             is DamagePotion -> {
                 player.addAmountToAttack(item.damage)
                 handled = true
+                remove = true
             }
             is SpellBook -> {
                 inventoryManager.selectedItem = item
                 handled = true
             }
+        }
+
+        if(remove) {
+            item.markedForRemoval = true
         }
 
         return handled
