@@ -25,11 +25,7 @@ class InventoryHud @Inject constructor(){
     }
 
     fun draw() {
-        inventoryManager.items.forEach {  item ->
-            if(item.isCurrentlySelected) {
-                drawLine(item.x, item.y, item.width, item.height)
-            }
-        }
+
     }
 
 }

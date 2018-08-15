@@ -3,7 +3,6 @@ package com.joer.cards.models
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.Rectangle
 import com.joer.cards.config.Config
 
 
@@ -28,10 +27,6 @@ abstract class Item(xCord: Int, yCord: Int, atlas: TextureAtlas): Card(xCord, yC
     abstract var textureRegion: TextureRegion
 
     private var inInventory = false
-
-    internal var isCurrentlySelected = false
-
-    lateinit var inventoryBoundingBox: Rectangle
 
     override fun update(delta: Float) {
         if(!inInventory) {

@@ -1,17 +1,13 @@
 package com.joer.cards.managers
 
-import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Rectangle
 import com.joer.cards.animations.Explosion
 import com.joer.cards.config.Config
 import com.joer.cards.managers.CardManager.Companion.GRID_WIDTH
-import com.joer.cards.models.TURNS_ACTIVE
 import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
-import com.joer.cards.models.items.potion.DamagePotion
-import com.joer.cards.models.items.potion.HealthPotion
 import javax.inject.Inject
 
 class InputManager @Inject constructor() {
@@ -60,8 +56,7 @@ class InputManager @Inject constructor() {
 
                         val explosion = Explosion(atlas, selectedX, selectedY)
                         inventoryManager.explosions.add(explosion)
-                        inventoryManager.removeSelectedItem()
-
+                        inventoryManager.selectedItem = null
                         cardManager.dealDamageToCardAtPosition(position, spellBoolActive)
                     }
                 } else {
@@ -69,26 +64,6 @@ class InputManager @Inject constructor() {
                         cardManager.firstSelectedPosition = position
                         collisionManager.switchBasedOnTile()
                         cardManager.firstSelectedPosition = -1
-                    }
-                }
-            }
-        }
-
-        //check if it hit inventoryOld
-        inventoryManager.items.forEach {
-            if (it.boundingRectangle.contains(screenX, screenY) && it.turnsActive == TURNS_ACTIVE.FOREVER.getValue()) {
-                val currentlySelected = it.isCurrentlySelected
-                inventoryManager.items.map { item -> item.isCurrentlySelected = false }
-                it.isCurrentlySelected = !currentlySelected
-
-                when(it) {
-                    is HealthPotion -> {
-                        player.addAmountToHealth(it.health)
-                        it.markedForRemoval = true
-                    }
-                    is DamagePotion -> {
-                        player.addAmountToAttack(it.health)
-                        it.markedForRemoval = true
                     }
                 }
             }
@@ -125,11 +100,4 @@ class InputManager @Inject constructor() {
         }
     }
 
-    fun detectClickedInventory(x: Float, y: Float, pointer: Int, button: Int) {
-        inventoryManager.items.forEach {
-            if(it.inventoryBoundingBox.contains(x, y)) {
-                Gdx.app.log("D","clicked on an $it")
-            }
-        }
-    }
 }

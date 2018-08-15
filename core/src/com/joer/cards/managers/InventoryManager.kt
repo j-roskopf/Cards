@@ -43,16 +43,7 @@ class InventoryManager @Inject constructor() {
     }
 
     fun spellBookActive(): Int {
-        return items.firstOrNull { item ->  item is SpellBook && item.isCurrentlySelected }?.damage ?: -1
+        return if(selectedItem is SpellBook) selectedItem?.damage ?: -1 else -1
     }
 
-    fun removeSelectedItem() {
-        val iterator = items.iterator()
-        while(iterator.hasNext()) {
-            val next = iterator.next()
-            if(next.isCurrentlySelected) {
-                iterator.remove()
-            }
-        }
-    }
 }

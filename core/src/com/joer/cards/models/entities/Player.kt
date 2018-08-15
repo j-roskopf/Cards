@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
 import com.joer.cards.config.Config
 import com.joer.cards.models.Card
+import javax.inject.Inject
 
 enum class PLAYER_STATE { IDLE, ATTACKING, DEAD }
 
-class Player(xCord: Int, yCord: Int, atlas: TextureAtlas) : Card(xCord, yCord, atlas) {
+class Player @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas) : Card(xCord, yCord, atlas) {
 
     private var playerIdle: Animation<TextureRegion>
     private var firstPlayerAttack: Animation<TextureRegion>

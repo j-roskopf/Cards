@@ -5,9 +5,7 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.joer.cards.CardGame
 import com.joer.cards.managers.CardManager
-import com.joer.cards.managers.InventoryManager
 import com.joer.cards.models.entities.Player
 import com.joer.cards.ui.CardHud
 import com.joer.cards.ui.GameHud
@@ -47,14 +45,6 @@ class GameModule {
         return FrameRate()
     }
 
-    private val inventoryManager = InventoryManager()
-
-    @Provides
-    @Singleton
-    fun providesInventoryManager(): InventoryManager {
-        return inventoryManager
-    }
-
     @Provides
     @Singleton
     fun providesGameHud(batch: SpriteBatch, atlas: TextureAtlas): GameHud {
@@ -73,9 +63,4 @@ class GameModule {
         return AssetManager()
     }
 
-    @Provides
-    @Singleton
-    fun providesCardGame(): CardGame {
-        return CardGame()
-    }
 }

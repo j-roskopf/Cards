@@ -2,13 +2,8 @@ package com.joer.cards.ui.inventory
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureAtlas
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector3
-import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane
@@ -19,14 +14,19 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.joer.cards.config.Config
 import com.joer.cards.managers.InventoryManager
+import com.joer.cards.models.Item
+import com.joer.cards.models.entities.Player
+import com.joer.cards.models.items.SpellBook
+import com.joer.cards.models.items.potion.DamagePotion
+import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.screens.PlayScreen
 import javax.inject.Inject
 
 
-class Inventory @Inject constructor(private val spriteBatch: SpriteBatch,
+class Inventory @Inject constructor(spriteBatch: SpriteBatch,
                                     private val assetManager: AssetManager,
                                     private val inventoryManager: InventoryManager,
-                                    private val atlas: TextureAtlas) {
+                                    private val player: Player) {
 
     companion object {
         const val INVENTORY_ITEM_WIDTH = 48f
@@ -80,16 +80,12 @@ class Inventory @Inject constructor(private val spriteBatch: SpriteBatch,
             val itemPosition = Vector3(itemX, itemY, 0f)
             orthographicCamera.unproject(itemPosition)
 
-            val inventoryBoundingRectangle = Rectangle(itemPosition.x, itemPosition.y, INVENTORY_ITEM_WIDTH, INVENTORY_ITEM_HEIGHT)
-
-            //set the bounding box of the item as it sits in the inventory so we can detect clicks on it
-            item.inventoryBoundingBox = inventoryBoundingRectangle
-
             val actor = InventoryActor(item.textureRegion, itemX, itemY)
             actor.addListener(object: ClickListener() {
                 override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                    inventoryManager.selectedItem = item
-                    PlayScreen.showInventory = false
+                    if(handleItem(item)) {
+                        PlayScreen.showInventory = false
+                    }
                 }
             })
 
@@ -113,15 +109,25 @@ class Inventory @Inject constructor(private val spriteBatch: SpriteBatch,
         stage.act(delta)
         stage.draw()
     }
-}
 
-class InventoryActor(private val textureRegion: TextureRegion, xCord: Float, yCord: Float) : Actor() {
-    init {
-        setSize(Inventory.INVENTORY_ITEM_HEIGHT, Inventory.INVENTORY_ITEM_WIDTH)
-        setPosition(xCord, yCord)
-    }
+    private fun handleItem(item: Item): Boolean {
+        var handled = false
 
-    override fun draw(batch: Batch, parentAlpha: Float) {
-        batch.draw(textureRegion, x, y, width, height)
+        when(item) {
+            is HealthPotion -> {
+                player.addAmountToHealth(item.health)
+                handled = true
+            }
+            is DamagePotion -> {
+                player.addAmountToAttack(item.damage)
+                handled = true
+            }
+            is SpellBook -> {
+                inventoryManager.selectedItem = item
+                handled = true
+            }
+        }
+
+        return handled
     }
 }
