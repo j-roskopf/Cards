@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.joer.cards.managers.InventoryManager
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class InventoryHud @Inject constructor(){
     @Inject lateinit var camera: OrthographicCamera
     @Inject lateinit var inventoryManager: InventoryManager

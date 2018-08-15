@@ -25,8 +25,9 @@ import com.joer.cards.models.items.potion.DamagePotion
 import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.screens.PlayScreen
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class Inventory @Inject constructor(spriteBatch: SpriteBatch,
                                     private val assetManager: AssetManager,
                                     private val inventoryManager: InventoryManager,

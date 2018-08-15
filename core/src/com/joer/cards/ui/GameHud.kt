@@ -21,7 +21,9 @@ import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.screens.PlayScreen
 import com.joer.cards.ui.inventory.Inventory
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class GameHud @Inject constructor(private val batch: SpriteBatch, atlas: TextureAtlas) : Disposable {
 
     @Inject

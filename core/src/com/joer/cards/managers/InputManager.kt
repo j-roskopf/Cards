@@ -9,7 +9,9 @@ import com.joer.cards.managers.CardManager.Companion.GRID_WIDTH
 import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class InputManager @Inject constructor() {
 
     @Inject lateinit var player: Player

@@ -7,11 +7,13 @@ import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
-import com.joer.cards.models.items.potion.HealthPotion
 import com.joer.cards.models.items.SpellBook
 import com.joer.cards.models.items.potion.DamagePotion
+import com.joer.cards.models.items.potion.HealthPotion
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class CollisionManager @Inject constructor() {
 
     @Inject lateinit var inventoryManager: InventoryManager
