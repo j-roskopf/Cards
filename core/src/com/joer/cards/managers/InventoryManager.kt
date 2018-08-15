@@ -46,4 +46,14 @@ class InventoryManager @Inject constructor() {
         return if(selectedItem is SpellBook) selectedItem?.damage ?: -1 else -1
     }
 
+    fun removeSelectedItem() {
+        items.forEach {
+            if(it == selectedItem) {
+                it.markedForRemoval = true
+            }
+        }
+
+        selectedItem = null
+    }
+
 }

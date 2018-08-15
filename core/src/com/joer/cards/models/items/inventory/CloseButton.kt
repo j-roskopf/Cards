@@ -15,6 +15,7 @@ class CloseButton @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtla
     init {
         setBounds(0f, 0f, 32f, 32f)
     }
+
     override fun draw(batch: Batch) {
         batch.draw(textureRegion, x, y, 32f, 32f)
     }

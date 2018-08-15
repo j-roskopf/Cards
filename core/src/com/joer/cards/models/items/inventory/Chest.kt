@@ -13,6 +13,10 @@ class Chest @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas): It
     var spriteWidth = 16
     var spriteHeight = 16
 
+    init {
+        setBounds(0f, 0f, Item.spriteWidth.toFloat(), Item.spriteHeight.toFloat())
+    }
+
     override var textureRegion: TextureRegion =
             TextureRegion(atlas.findRegion("dungeon"),
                     14 * spriteWidth,

@@ -3,7 +3,7 @@ package com.joer.cards.config
 class Config {
     companion object {
         const val GAME_WIDTH = 480f
-        const val GAME_HEIGHT = 800f
+        const val GAME_HEIGHT = 840f
 
         // want to achieve 64/89 ratio
         // 0.71910112359

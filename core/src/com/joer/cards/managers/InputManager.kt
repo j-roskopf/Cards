@@ -56,7 +56,9 @@ class InputManager @Inject constructor() {
 
                         val explosion = Explosion(atlas, selectedX, selectedY)
                         inventoryManager.explosions.add(explosion)
-                        inventoryManager.selectedItem = null
+
+                        inventoryManager.removeSelectedItem()
+
                         cardManager.dealDamageToCardAtPosition(position, spellBoolActive)
                     }
                 } else {
