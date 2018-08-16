@@ -115,6 +115,8 @@ class PlayScreen @Inject constructor() : Screen, InputAdapter() {
             }
 
             fxManager.update(delta)
+
+            frameRate.update()
         }
     }
 
@@ -163,7 +165,6 @@ class PlayScreen @Inject constructor() : Screen, InputAdapter() {
             showInventory = !showInventory
             inventory.initialize()
         }
-
 
         return super.keyUp(keycode)
     }
