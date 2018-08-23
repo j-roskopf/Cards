@@ -5,9 +5,8 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.joer.cards.managers.InventoryManager
 import com.joer.cards.models.entities.Player
-import com.joer.cards.ui.GameHud
-import com.joer.cards.util.FrameRate
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -23,32 +22,19 @@ class GameModule {
     @Singleton
     fun providesTextureAtlas(): TextureAtlas = TextureAtlas("pack.atlas")
 
-    val camera = OrthographicCamera()
+    @Provides
+    @Singleton
+    fun providesCamera(): OrthographicCamera = OrthographicCamera()
 
     @Provides
     @Singleton
-    fun providesCamera(): OrthographicCamera = camera
+    fun providesLogger() = Gdx.app.applicationLogger!!
+
 
     @Provides
     @Singleton
-    fun providesLogger() = Gdx.app.applicationLogger
-
-    @Provides
-    @Singleton
-    fun providesFrameRate(): FrameRate {
-        return FrameRate()
-    }
-
-    @Provides
-    @Singleton
-    fun providesGameHud(batch: SpriteBatch, atlas: TextureAtlas): GameHud {
-        return GameHud(batch, atlas)
-    }
-
-    @Provides
-    @Singleton
-    fun providesPlayer( atlas: TextureAtlas): Player {
-        return Player(1, 1, atlas)
+    fun providesPlayer( atlas: TextureAtlas, inventoryManager: InventoryManager): Player {
+        return Player(1, 1, atlas, inventoryManager)
     }
 
     @Provides

@@ -1,7 +1,10 @@
 package com.joer.cards.screens
 
-import com.badlogic.gdx.*
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input.Keys.*
+import com.badlogic.gdx.InputAdapter
+import com.badlogic.gdx.InputMultiplexer
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -20,10 +23,13 @@ import com.joer.cards.ui.InventoryHud
 import com.joer.cards.ui.inventory.Inventory
 import com.joer.cards.util.FrameRate
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class PlayScreen @Inject constructor() : Screen, InputAdapter() {
+@Singleton
+@Suppress("MemberVisibilityCanBePrivate")
+class PlayScreen @Inject constructor(internal val cardGame: CardGame) : Screen, InputAdapter() {
 
-    private lateinit var viewport: Viewport
+    private var viewport: Viewport
 
     @Inject lateinit var frameRate: FrameRate
     @Inject lateinit var gameHud: GameHud
@@ -35,7 +41,6 @@ class PlayScreen @Inject constructor() : Screen, InputAdapter() {
     @Inject lateinit var camera: OrthographicCamera
     @Inject lateinit var cardManager: CardManager
     @Inject lateinit var inventory: Inventory
-    @Inject lateinit var logger: ApplicationLogger
     @Inject lateinit var cardHud: CardHud
 
     private var inputMultiplexer = InputMultiplexer()
@@ -58,6 +63,8 @@ class PlayScreen @Inject constructor() : Screen, InputAdapter() {
         inputMultiplexer.addProcessor(inventory.stage)
 
         Gdx.input.inputProcessor = inputMultiplexer
+
+        cardManager.game = cardGame
     }
 
     override fun hide() {

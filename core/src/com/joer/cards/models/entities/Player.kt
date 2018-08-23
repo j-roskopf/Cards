@@ -6,12 +6,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
 import com.joer.cards.config.Config
+import com.joer.cards.managers.InventoryManager
 import com.joer.cards.models.Card
 import javax.inject.Inject
+import javax.inject.Singleton
 
 enum class PLAYER_STATE { IDLE, ATTACKING, DEAD }
 
-class Player @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas) : Card(xCord, yCord, atlas) {
+@Singleton
+class Player @Inject constructor(xCord: Int, yCord: Int, atlas: TextureAtlas, private val inventoryManager: InventoryManager) : Card(xCord, yCord, atlas) {
 
     private var playerIdle: Animation<TextureRegion>
     private var firstPlayerAttack: Animation<TextureRegion>

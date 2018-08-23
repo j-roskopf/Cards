@@ -4,6 +4,7 @@ import com.joer.cards.animations.Explosion
 import com.joer.cards.models.Item
 import com.joer.cards.models.TURNS_ACTIVE
 import com.joer.cards.models.items.Necklace
+import com.joer.cards.models.items.Ring
 import com.joer.cards.models.items.SpellBook
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -40,6 +41,10 @@ class InventoryManager @Inject constructor() {
 
     fun necklaceActive(): Boolean {
         return items.any { item -> item is Necklace }
+    }
+
+    fun ringActive(): Boolean {
+        return items.any { item -> item is Ring }
     }
 
     fun spellBookActive(): Int {

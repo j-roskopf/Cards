@@ -7,6 +7,7 @@ import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
 import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
+import com.joer.cards.models.items.Ring
 import com.joer.cards.models.items.SpellBook
 import com.joer.cards.models.items.potion.DamagePotion
 import com.joer.cards.models.items.potion.HealthPotion
@@ -47,6 +48,9 @@ class CollisionManager @Inject constructor() {
             is SpellBook -> {
                 pickupItem(tileClickedOn)
             }
+            is Ring -> {
+                pickupItem(tileClickedOn)
+            }
         }
     }
 
@@ -67,16 +71,22 @@ class CollisionManager @Inject constructor() {
     }
 
     private fun pickUpSword(tileClickedOn: Sword) {
-        (cardManager.cards[cardManager.playerPosition] as Player).addAmountToAttack(tileClickedOn.health)
+        (cardManager.cards[cardManager.playerPosition] as Player).addAmountToAttack(tileClickedOn.attack)
         cardManager.swapCards()
     }
 
     private fun attackEnemy(tileClickedOn: Enemy) {
-        (cardManager.cards[cardManager.playerPosition] as Player).attack()
-        val killed = cardManager.calculateDamage(tileClickedOn)
-        if(killed) {
-            //we killed them!
+        val player = (cardManager.cards[cardManager.playerPosition] as Player)
+        player.attack()
+        if(inventoryManager.ringActive()) {
+            //the player is invincible
             cardManager.swapCards()
+        } else {
+            val killed = cardManager.calculateDamage(tileClickedOn)
+            if(killed) {
+                //we killed them!
+                cardManager.swapCards()
+            }
         }
     }
 

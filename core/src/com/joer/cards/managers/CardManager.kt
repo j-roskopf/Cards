@@ -1,6 +1,5 @@
 package com.joer.cards.managers
 
-import com.badlogic.gdx.ApplicationLogger
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import com.joer.cards.CardGame
@@ -9,11 +8,10 @@ import com.joer.cards.models.entities.Enemy
 import com.joer.cards.models.entities.Player
 import com.joer.cards.models.entities.Shield
 import com.joer.cards.models.entities.Sword
-import com.joer.cards.models.items.GoldBar
 import com.joer.cards.models.items.Necklace
 import com.joer.cards.models.items.SpellBook
-import com.joer.cards.models.items.potion.DamagePotion
 import com.joer.cards.models.items.potion.HealthPotion
+import com.joer.cards.screens.GameOverScreen
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -23,7 +21,6 @@ class CardManager @Inject constructor() {
     @Inject lateinit var inventoryManager: InventoryManager
     @Inject lateinit var player: Player
     @Inject lateinit var atlas: TextureAtlas
-    @Inject lateinit var logger: ApplicationLogger
 
     internal var cards: HashMap<Int, Card> = HashMap()
     internal var firstSelectedPosition = -1
@@ -34,6 +31,7 @@ class CardManager @Inject constructor() {
     }
 
     var playerPosition = 5
+    lateinit var game: CardGame
 
     init {
         CardGame.component.inject(this)
@@ -72,9 +70,9 @@ class CardManager @Inject constructor() {
     private fun addCardAtPosition(psn: Int) {
         val x = psn % GRID_WIDTH
         val y = psn / GRID_WIDTH
-        val choice = (Math.random() * 8).toInt()
+        val choice = (Math.random() * 9).toInt()
         when(choice) {
-            0 -> cards[psn] = Enemy(x, y, atlas)
+/*            0 -> cards[psn] = Enemy(x, y, atlas)
             1 -> cards[psn] = Sword(x, y, atlas)
             2 -> cards[psn] = Shield(x, y, atlas)
             3 -> cards[psn] = GoldBar(x, y, atlas)
@@ -82,7 +80,19 @@ class CardManager @Inject constructor() {
             5 -> cards[psn] = SpellBook(x, y, atlas)
             6 -> cards[psn] = HealthPotion(x, y, atlas)
             7 -> cards[psn] = DamagePotion(x, y, atlas)
-            else -> cards[psn] = Sword(x, y, atlas)
+            8 -> cards[psn] = Ring(x, y, atlas)
+            else -> cards[psn] = Sword(x, y, atlas)*/
+
+            0 -> cards[psn] = Enemy(x, y, atlas)
+            1 -> cards[psn] = Enemy(x, y, atlas)
+            2 -> cards[psn] = Enemy(x, y, atlas)
+            3 -> cards[psn] = Enemy(x, y, atlas)
+            4 -> cards[psn] = Enemy(x, y, atlas)
+            5 -> cards[psn] = Enemy(x, y, atlas)
+            6 -> cards[psn] = Enemy(x, y, atlas)
+            7 -> cards[psn] = Enemy(x, y, atlas)
+            8 -> cards[psn] = Enemy(x, y, atlas)
+            else -> cards[psn] = Enemy(x, y, atlas)
         }
     }
 
@@ -107,7 +117,7 @@ class CardManager @Inject constructor() {
     internal fun calculateDamage(tileClickedOn: Enemy): Boolean {
         val currentHealth = tileClickedOn.health
         tileClickedOn.health = tileClickedOn.health - ((cards[playerPosition] as Player).attack)
-        var leftoverAttack = (cards[playerPosition]?.attack ?: 0) - currentHealth
+        val leftoverAttack = (cards[playerPosition]?.attack ?: 0) - currentHealth
 
         when {
             cards[playerPosition]?.attack ?: 0 <= 0 -> {
@@ -115,6 +125,7 @@ class CardManager @Inject constructor() {
 
                 if(cards[playerPosition]?.health ?: 0 <= 0) {
                     (cards[playerPosition] as Player).die()
+                    game?.screen = GameOverScreen()
                     return false
                 }
                 return true

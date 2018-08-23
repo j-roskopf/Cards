@@ -8,8 +8,9 @@ import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.TimeUtils
 import com.joer.cards.config.Config
 import javax.inject.Inject
+import javax.inject.Singleton
 
-
+@Singleton
 class FrameRate @Inject constructor(): Disposable {
     internal var lastTimeCounted: Long = 0
     private var sinceChange: Float = 0.toFloat()

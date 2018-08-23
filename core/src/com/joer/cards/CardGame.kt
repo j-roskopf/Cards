@@ -9,8 +9,10 @@ import com.joer.cards.di.components.GameComponent
 import com.joer.cards.di.modules.GameModule
 import com.joer.cards.screens.PlayScreen
 import javax.inject.Inject
+import javax.inject.Singleton
 
-class CardGame: Game() {
+@Singleton
+class CardGame @Inject constructor(): Game() {
 
     // sigmoid function for probability
 
@@ -31,10 +33,8 @@ class CardGame: Game() {
         assetManager.load("icons/icons.atlas", TextureAtlas::class.java)
         assetManager.finishLoading()
 
-
-        setScreen(PlayScreen())
+        setScreen(PlayScreen(this))
     }
-
 }
 
 
