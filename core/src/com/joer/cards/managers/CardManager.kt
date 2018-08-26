@@ -1,5 +1,7 @@
 package com.joer.cards.managers
 
+import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.math.Vector2
 import com.joer.cards.CardGame
@@ -21,6 +23,8 @@ class CardManager @Inject constructor() {
     @Inject lateinit var inventoryManager: InventoryManager
     @Inject lateinit var player: Player
     @Inject lateinit var atlas: TextureAtlas
+    @Inject lateinit var spriteBatch: SpriteBatch
+    @Inject lateinit var assetManager: AssetManager
 
     internal var cards: HashMap<Int, Card> = HashMap()
     internal var firstSelectedPosition = -1
@@ -31,7 +35,9 @@ class CardManager @Inject constructor() {
     }
 
     var playerPosition = 5
-    lateinit var game: CardGame
+    var game: CardGame? = null
+
+    var deathTimer = -1f
 
     init {
         CardGame.component.inject(this)
@@ -43,7 +49,9 @@ class CardManager @Inject constructor() {
      *      |0,0|1,0|2,0|
      */
     internal fun createInitialCards() {
-        cards.clear()
+        cards = HashMap()
+
+        player = Player(1, 1, atlas, inventoryManager)
 
         cards[0] = Sword(0, 0, atlas)
         cards[1] = Enemy(1, 0, atlas)
@@ -125,7 +133,7 @@ class CardManager @Inject constructor() {
 
                 if(cards[playerPosition]?.health ?: 0 <= 0) {
                     (cards[playerPosition] as Player).die()
-                    game?.screen = GameOverScreen()
+                    deathTimer = 0f
                     return false
                 }
                 return true
@@ -146,6 +154,14 @@ class CardManager @Inject constructor() {
     }
 
     fun update(delta: Float) {
+        if(deathTimer >= 0) {
+            deathTimer += delta
+        }
+
+        if(deathTimer > 1) {
+            game?.screen = GameOverScreen(spriteBatch, assetManager, game!!)
+            deathTimer = -1f
+        }
     }
 
     fun dealDamageToCardAtPosition(position: Int, spellBoolActiveDamage: Int) {
@@ -157,5 +173,4 @@ class CardManager @Inject constructor() {
             }
         }
     }
-
 }

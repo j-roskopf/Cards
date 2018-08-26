@@ -65,6 +65,8 @@ class PlayScreen @Inject constructor(internal val cardGame: CardGame) : Screen, 
         Gdx.input.inputProcessor = inputMultiplexer
 
         cardManager.game = cardGame
+
+        Gdx.app.log("D","init of play")
     }
 
     override fun hide() {

@@ -42,8 +42,8 @@ class Inventory @Inject constructor(spriteBatch: SpriteBatch,
     private var viewport: Viewport = FitViewport(Config.GAME_WIDTH, Config.GAME_HEIGHT, orthographicCamera)
     internal var stage: Stage = Stage(viewport, spriteBatch)
     private var table: Table = Table()
-    val maxPerRow = 6
 
+    val maxPerRow = 6
 
     init {
         table.top()
@@ -96,8 +96,6 @@ class Inventory @Inject constructor(spriteBatch: SpriteBatch,
         currentTable.add(closeButton).top().left().pad(16f).colspan(maxPerRow).growX().row()
 
         var mod: Int
-
-        Gdx.app.log("D","${inventoryManager.items.size}")
 
         inventoryManager.items.forEachIndexed { index, item ->
             if(item.turnsActive == TURNS_ACTIVE.FOREVER.getValue()) {

@@ -30,8 +30,8 @@ abstract class Card(xCord: Int, yCord: Int, atlas: TextureAtlas): Sprite() {
     private val shieldSpriteWidth = 16f
     private val shieldSpriteHeight = 16f
 
-    internal open var health = 10
-    internal open var attack = 10
+    internal open var health = 1
+    internal open var attack = 1
 
     init {
         x = xCord * Config.CARD_WIDTH
